@@ -42,7 +42,7 @@ public final class OpaqueArgumentTypes {
 
   /**
    * Returns an argument type for the {@code minecraft:game_profile} parser.
-   * Used to specify a player, only or not. Can also use a select, which may
+   * Used to specify a player, online or not. Can also use a select, which may
    * match one or more players (but not entities).
    *
    * @param manager the command manager.
