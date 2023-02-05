@@ -41,7 +41,8 @@ dependencies {
 
 ## Usage
 
-The [`OpaqueArgumentTypes`]() class provides factory methods to construct [`OpaqueArgumentType`](https://jd.papermc.io/velocity/3.0.0/com/velocitypowered/api/command/OpaqueArgumentType.html)
+The [`OpaqueArgumentTypes`](https://javadoc.io/doc/me.hugmanrique/opaque-argument-types/latest/me/hugmanrique/opaqueargumenttypes/OpaqueArgumentTypes.html)
+class provides factory methods to construct [`OpaqueArgumentType`](https://jd.papermc.io/velocity/3.0.0/com/velocitypowered/api/command/OpaqueArgumentType.html)
 instances for all the parser types known by the vanilla client. Some argument types accept properties,
 which this library can serialize for all the Minecraft versions supported by Velocity.
 
@@ -63,6 +64,9 @@ Recall that Velocity automatically forwards any execution that contains an argum
 an opaque type to the backend server. This means that any [`Command`](https://github.com/Mojang/brigadier/blob/master/src/main/java/com/mojang/brigadier/Command.java)
 or [`SuggestionProvider`](https://github.com/Mojang/brigadier/blob/master/src/main/java/com/mojang/brigadier/suggestion/SuggestionProvider.java)
 on that node are ignored.
+
+Using a static import to call the methods in the [`OpaqueArgumentTypes`](https://javadoc.io/doc/me.hugmanrique/opaque-argument-types/latest/me/hugmanrique/opaqueargumenttypes/OpaqueArgumentTypes.html)
+class is encouraged (this follows the convention used in [Brigadier](https://github.com/Mojang/brigadier)).
 
 ## License
 
