@@ -1,0 +1,93 @@
+import java.nio.charset.StandardCharsets
+
+plugins {
+  id 'java-library'
+  id 'signing'
+  id 'maven-publish'
+  id 'io.github.gradle-nexus.publish-plugin' version '1.1.0'
+}
+
+group 'me.hugmanrique'
+version '1.0.0-SNAPSHOT'
+
+ext {
+  isReleaseVersion = !version.endsWith('SNAPSHOT')
+}
+
+java {
+  toolchain {
+    languageVersion = JavaLanguageVersion.of(11)
+  }
+  withJavadocJar()
+  withSourcesJar()
+}
+
+repositories {
+  mavenLocal()
+  mavenCentral()
+  maven {
+    name = 'papermc'
+    url = 'https://repo.papermc.io/repository/maven-public/'
+  }
+}
+
+dependencies {
+  implementation 'com.velocitypowered:velocity-api:3.2.0-SNAPSHOT'
+  testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+  testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+}
+
+javadoc {
+  options {
+    encoding = StandardCharsets.UTF_8.name()
+    charSet = StandardCharsets.UTF_8.name()
+    addStringOption('Xdoclint:all,-missing/package')
+  }
+}
+
+test {
+  useJUnitPlatform()
+}
+
+// Run `./gradlew publishToSonatype closeSonatypeStagingRepository` to publish
+publishing {
+  publications {
+    mavenJava(MavenPublication) {
+      pom {
+        name = 'opaque-argument-types'
+        description = 'A Velocity library that provides access to the argument types known by the vanilla client. '
+        url = 'https://github.com/hugmanrique/opaque-argument-types'
+        licenses {
+          license {
+            name = 'MIT License'
+            url = 'https://opensource.org/licenses/mit-license.php'
+          }
+        }
+        scm {
+          connection = 'scm:git:git@github.com:hugmanrique/opaque-argument-types.git'
+          developerConnection = 'scm:git:git@github.com:hugmanrique/opaque-argument-types.git'
+          url = 'https://github.com/hugmanrique/opaque-argument-types'
+        }
+        developers {
+          developer {
+            id = 'hugmanrique'
+            name = 'Hugo Manrique'
+            email = 'maven@hugmanrique.me'
+          }
+        }
+      }
+      from(components.java)
+    }
+  }
+}
+
+nexusPublishing {
+  repositories {
+    sonatype()
+  }
+}
+
+signing {
+  required { isReleaseVersion && gradle.taskGraph.hasTask('publish') }
+  sign publishing.publications.mavenJava
+}
